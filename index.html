@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevStudio — Sistemas & Páginas Web a Medida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:        #f5f6fa;
+      --white:     #ffffff;
+      --surface:   #f0f1f5;
+      --accent:    #4f46e5;
+      --accent-h:  #4338ca;
+      --accent2:   #10b981;
+      --red:       #ef4444;
+      --text:      #1e1e2e;
+      --text-dim:  #6b7280;
+      --text-muted:#9ca3af;
+      --border:    #e5e7eb;
+      --border2:   #c7d2fe;
+      --shadow:    0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════════
+       HERO / LANDING
+    ══════════════════════════════════ */
+    #landing {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1.25rem;
+      color: var(--text); letter-spacing: -.5px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-tag {
+      font-size: 11px; font-weight: 500;
+      color: var(--text-dim);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    @media(max-width:600px){ nav{padding:16px 20px;} .nav-tag{display:none;} }
+
+    /* HERO CONTENT */
+    .hero {
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 70px 48px 80px;
+      max-width: 860px;
+    }
+    @media(max-width:600px){ .hero{padding:48px 24px 60px;} }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; letter-spacing: .5px;
+      color: var(--accent);
+      background: #eef2ff;
+      border: 1px solid var(--border2);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero-tag::before { content:'●'; font-size:8px; }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .hero h1 .hl  { color: var(--accent); }
+    .hero h1 .hl2 { color: var(--accent2); }
+
+    .hero p {
+      font-size: 16px; font-weight: 400;
+      color: var(--text-dim); line-height: 1.7;
+      max-width: 520px; margin-bottom: 36px;
+    }
+
+    /* CTA BUTTON */
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 600;
+      border: none; padding: 16px 32px;
+      border-radius: 8px; cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 4px 14px rgba(79,70,229,.35);
+    }
+    .btn-cta:hover {
+      background: var(--accent-h);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79,70,229,.45);
+    }
+    .btn-cta svg { transition: transform .2s; }
+    .btn-cta:hover svg { transform: translateX(4px); }
+
+    /* STATS ROW */
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 52px;
+      padding-top: 36px; border-top: 1px solid var(--border);
+      width: 100%;
+    }
+    @media(max-width:480px){ .hero-stats{gap:24px;} }
+    .stat-item .num {
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-item .lbl {
+      font-size: 12px; color: var(--text-muted); margin-top: 2px;
+    }
+
+    /* SERVICES STRIP */
+    .services-strip {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 16px 48px;
+      display: flex; gap: 36px; overflow-x: auto;
+    }
+    @media(max-width:600px){ .services-strip{padding:14px 20px; gap:24px;} }
+    .services-strip::-webkit-scrollbar { display: none; }
+    .svc-item {
+      display: flex; align-items: center; gap: 8px;
+      white-space: nowrap; font-size: 13px; font-weight: 500;
+      color: var(--text-dim); flex-shrink: 0;
+    }
+    .svc-dot { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; }
+
+    /* ══════════════════════════════════
+       FORMULARIO OVERLAY
+    ══════════════════════════════════ */
+    #form-overlay {
+      position: fixed; inset: 0;
+      background: rgba(15,15,25,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      overflow-y: auto;
+      animation: fadeIn .25s ease both;
+    }
+    #form-overlay.open { display: block; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    .form-container {
+      max-width: 740px; margin: 32px auto;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      padding: 40px 44px 56px;
+    }
+    @media(max-width:600px){ .form-container{margin:0; border-radius:0; padding:24px 18px 48px;} }
+
+    /* Form header */
+    .form-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-header h2 {
+      font-size: clamp(1.4rem,4vw,1.9rem); font-weight: 700;
+      line-height: 1.15; letter-spacing: -.5px;
+    }
+    .form-header h2 em { color: var(--accent); font-style: normal; }
+    .form-header p { font-size:13px; color:var(--text-dim); margin-top:4px; }
+    .btn-close {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-dim); width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items:center; justify-content:center;
+      cursor: pointer; font-size: 18px; flex-shrink:0;
+      transition: all .2s;
+    }
+    .btn-close:hover { background: #fee2e2; border-color:#fca5a5; color: var(--red); }
+
+    /* SECCIONES DEL FORM */
+    .form-section { margin-bottom: 28px; }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content:''; flex:1; height:1px; background: var(--border2);
+    }
+
+    /* CHECKBOX GRID */
+    .check-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 8px;
+    }
+    @media(max-width:480px){ .check-grid{grid-template-columns:1fr 1fr;} }
+
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      padding: 11px 14px; border-radius: 8px;
+      cursor: pointer; transition: all .18s; user-select: none;
+    }
+    .check-item:hover { border-color: var(--border2); background: #eef2ff; }
+    .check-item input[type="checkbox"] { display:none; }
+    .check-item.selected {
+      background: #eef2ff; border-color: var(--accent);
+    }
+    .check-box {
+      width: 17px; height: 17px; flex-shrink:0;
+      border: 1.5px solid var(--text-muted);
+      border-radius: 4px;
+      display: flex; align-items:center; justify-content:center;
+      font-size: 11px; color: transparent;
+      transition: all .18s;
+    }
+    .check-item.selected .check-box {
+      background: var(--accent); border-color: var(--accent); color: #fff;
+    }
+    .check-label { font-size: 13px; font-weight: 500; }
+    .check-item.selected .check-label { color: var(--accent); }
+
+    /* RADIO GROUP */
+    .radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .radio-item {
+      display: flex; align-items: center; gap: 9px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      padding: 11px 18px; border-radius: 8px;
+      cursor: pointer; transition: all .18s; user-select: none;
+      font-size: 13px; font-weight: 500;
+    }
+    .radio-item input[type="radio"] { display:none; }
+    .radio-item.selected {
+      background: #d1fae5; border-color: var(--accent2); color: #065f46;
+    }
+    .radio-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 1.5px solid var(--text-muted); flex-shrink: 0;
+      transition: all .18s;
+    }
+    .radio-item.selected .radio-dot {
+      background: var(--accent2); border-color: var(--accent2);
+    }
+
+    /* INPUTS */
+    .form-grid-2 {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    @media(max-width:520px){ .form-grid-2{grid-template-columns:1fr;} }
+    .form-group { display:flex; flex-direction:column; gap:6px; }
+    .form-group.full { grid-column: 1/-1; }
+    .form-group label {
+      font-size: 12px; font-weight: 600; color: var(--text);
+    }
+    .form-group label .req { color: var(--red); margin-left:2px; }
+    .form-group label .opt { color: var(--text-muted); font-weight:400; font-size:11px; }
+
+    .f-input, .f-select, .f-textarea {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; padding: 11px 14px;
+      border-radius: 8px;
+      outline: none; width: 100%;
+      transition: border-color .18s, box-shadow .18s;
+      appearance: none; -webkit-appearance:none;
+    }
+    .f-input::placeholder, .f-textarea::placeholder { color: var(--text-muted); }
+    .f-input:focus, .f-select:focus, .f-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(79,70,229,.1);
+    }
+    .f-textarea { min-height: 120px; resize: vertical; line-height:1.6; }
+
+    /* PHONE ROW */
+    .phone-row { display:flex; gap:8px; }
+    .f-select-country {
+      background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--text); font-family:'Inter',sans-serif;
+      font-size:13px; padding:11px 10px;
+      border-radius:8px; outline:none; cursor:pointer;
+      transition: border-color .18s;
+      appearance:none; width:120px; flex-shrink:0;
+    }
+    .f-select-country:focus { border-color:var(--accent); }
+    .phone-row .f-input { flex:1; }
+
+    /* FILE UPLOAD */
+    .file-drop {
+      border: 2px dashed var(--border);
+      padding: 28px 20px; border-radius: 10px;
+      text-align: center; cursor: pointer;
+      transition: all .2s; position: relative;
+      background: var(--surface);
+    }
+    .file-drop:hover, .file-drop.drag-over {
+      border-color: var(--accent);
+      background: #eef2ff;
+    }
+    .file-drop input[type="file"] {
+      position: absolute; inset:0; opacity:0; cursor:pointer; width:100%;
+    }
+    .file-drop-icon { font-size:26px; margin-bottom:8px; }
+    .file-drop p { font-size:13px; color:var(--text-dim); line-height:1.6; }
+    .file-drop strong { color: var(--accent); }
+    .file-list { margin-top:10px; display:flex; flex-direction:column; gap:6px; }
+    .file-tag {
+      display:inline-flex; align-items:center; gap:8px;
+      background: var(--surface); border:1px solid var(--border);
+      padding:8px 12px; border-radius:6px;
+      font-size:12px; color: var(--text-dim);
+    }
+    .file-tag .rm {
+      cursor:pointer; color: var(--red); font-size:14px;
+      line-height:1; margin-left:auto;
+    }
+
+    /* SELECT WRAP */
+    .f-select-wrap { position:relative; }
+    .f-select-wrap::after {
+      content:'▾'; position:absolute;
+      right:14px; top:50%; transform:translateY(-50%);
+      color:var(--accent); pointer-events:none; font-size:12px;
+    }
+    .f-select { width:100%; cursor:pointer; }
+    .f-select option { background:#fff; color:var(--text); }
+
+    /* SUBMIT BTN */
+    .btn-submit {
+      width:100%; background: var(--accent); color:#fff;
+      font-family:'Inter',sans-serif; font-size:15px; font-weight:600;
+      border:none; padding:16px; border-radius:8px;
+      cursor:pointer; transition:all .2s; margin-top:8px;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      box-shadow: 0 4px 14px rgba(79,70,229,.3);
+    }
+    .btn-submit:hover { background: var(--accent-h); transform:translateY(-1px); }
+    .btn-submit:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+    .form-note {
+      text-align:center; font-size:12px; color:var(--text-muted);
+      margin-top:12px; line-height:1.6;
+    }
+
+    /* ══════════════════════════════════
+       PANTALLA DE ÉXITO
+    ══════════════════════════════════ */
+    #success-screen {
+      position:fixed; inset:0;
+      background:#000;
+      z-index:200; display:none;
+      flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center; padding:32px;
+    }
+    #success-screen.show {
+      display:flex; animation:fadeIn .4s ease both;
+    }
+    .success-icon {
+      width:76px; height:76px; border-radius:50%;
+      border:2px solid var(--accent2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:32px; margin-bottom:24px;
+      animation:popIn .5s cubic-bezier(.34,1.56,.64,1) .2s both;
+    }
+    @keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+    #success-screen h2 {
+      font-size:clamp(1.6rem,5vw,2.2rem); font-weight:700;
+      letter-spacing:-.5px; margin-bottom:14px;
+      animation:slideUp .5s ease .35s both; color:#fff;
+    }
+    #success-screen h2 em { color:var(--accent2); font-style:normal; }
+    #success-screen p {
+      font-size:14px; color:#9ca3af; line-height:1.8;
+      max-width:420px; margin-bottom:28px;
+      animation:slideUp .5s ease .45s both;
+    }
+    @keyframes slideUp {
+      from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)}
+    }
+    .success-detail {
+      background:#111; border:1px solid #222;
+      padding:18px 28px; border-radius:10px; margin-bottom:28px;
+      font-size:13px; color:#888; line-height:2;
+      animation:slideUp .5s ease .55s both;
+    }
+    .success-detail strong { color:#fff; }
+    .btn-close-success {
+      background:transparent; border:1px solid #333;
+      color:#888; font-family:'Inter',sans-serif;
+      font-size:13px; font-weight:500;
+      padding:12px 28px; border-radius:8px; cursor:pointer;
+      transition:all .2s;
+      animation:slideUp .5s ease .65s both;
+    }
+    .btn-close-success:hover { border-color:#666; color:#ccc; }
+
+    /* MISC */
+    .error-msg { font-size:11px; color:var(--red); margin-top:4px; display:none; }
+    .field-error { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(239,68,68,.1) !important; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     LANDING PAGE
+══════════════════════════════════════════════════════ -->
+<div id="landing">
+  <nav>
+    <div class="nav-logo">Dev<span>Studio</span></div>
+    <div class="nav-tag">Sistemas & Web — Bolivia</div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-tag">Desarrollo a medida</div>
+    <h1>
+      Tu idea,<br>
+      <span class="hl">convertida</span><br>
+      en <span class="hl2">sistema</span>.
+    </h1>
+    <p>
+      Creamos páginas web, sistemas de gestión, aplicaciones y más.
+      Desde la idea hasta el producto final — con soporte incluido.
+    </p>
+
+    <button class="btn-cta" onclick="abrirFormulario()">
+      <span>Quiero mi Sistema</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="num">+20</div>
+        <div class="lbl">Proyectos</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">48h</div>
+        <div class="lbl">Respuesta</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">100%</div>
+        <div class="lbl">A medida</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-strip">
+    <div class="svc-item"><span class="svc-dot"></span>Páginas Web</div>
+    <div class="svc-item"><span class="svc-dot"></span>Sistemas de Gestión</div>
+    <div class="svc-item"><span class="svc-dot"></span>E-Commerce</div>
+    <div class="svc-item"><span class="svc-dot"></span>Dashboards</div>
+    <div class="svc-item"><span class="svc-dot"></span>Apps Web</div>
+    <div class="svc-item"><span class="svc-dot"></span>Automatizaciones</div>
+    <div class="svc-item"><span class="svc-dot"></span>Consultoría</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FORMULARIO DE SOLICITUD
+══════════════════════════════════════════════════════ -->
+<div id="form-overlay">
+  <div class="form-container">
+
+    <div class="form-header">
+      <div>
+        <h2>Nueva <em>Solicitud</em></h2>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:6px;letter-spacing:1px;">
+          Completa el formulario — te contactamos en menos de 48h
+        </p>
+      </div>
+      <button class="btn-close" onclick="cerrarFormulario()" title="Cerrar">✕</button>
+    </div>
+
+    <!-- ─── SECCIÓN A: DATOS PERSONALES ─── -->
+    <div class="form-section">
+      <div class="section-label">A — Datos de contacto</div>
+      <div class="form-grid-2">
+
+        <div class="form-group">
+          <label>Nombre completo <span class="req">*</span></label>
+          <input class="f-input" id="f-nombre" type="text">
+          <span class="error-msg" id="err-nombre">Campo requerido</span>
+        </div>
+
+        <div class="form-group">
+          <label>Correo electrónico <span class="req">*</span></label>
+          <input class="f-input" id="f-correo" type="email">
+          <span class="error-msg" id="err-correo">Correo inválido</span>
+        </div>
+
+        <div class="form-group">
+          <label>WhatsApp <span class="req">*</span></label>
+          <div class="phone-row">
+            <select class="f-select-country" id="f-pais">
+              <option value="+591">🇧🇴 +591</option>
+              <option value="+54">🇦🇷 +54</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+56">🇨🇱 +56</option>
+              <option value="+57">🇨🇴 +57</option>
+              <option value="+51">🇵🇪 +51</option>
+              <option value="+598">🇺🇾 +598</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+52">🇲🇽 +52</option>
+            </select>
+            <input class="f-input" id="f-wsp" type="tel" >
+          </div>
+          <span class="error-msg" id="err-wsp">Número requerido</span>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre del proyecto / página <span class="req">*</span></label>
+          <input class="f-input" id="f-proyecto" type="text">
+          <span class="error-msg" id="err-proyecto">Campo requerido</span>
+        </div>
+
+        <div class="form-group full">
+          <label>Tipo de servicio <span class="req">*</span></label>
+          <div class="f-select-wrap">
+            <select class="f-input f-select" id="f-servicio">
+              <option value="">— Selecciona el tipo de servicio —</option>
+              <option value="Página Web Corporativa">Página Web Corporativa</option>
+              <option value="Tienda Online / E-Commerce">Tienda Online / E-Commerce</option>
+              <option value="Sistema de Gestión Empresarial">Sistema de Gestión (ERP/CRM)</option>
+              <option value="Sistema de Inventario">Sistema de Inventario</option>
+              <option value="Sistema de Facturación">Sistema de Facturación</option>
+              <option value="Dashboard / Panel de Control">Dashboard / Panel de Control</option>
+              <option value="Aplicación Web a Medida">Aplicación Web a Medida</option>
+              <option value="Landing Page">Landing Page</option>
+              <option value="Portafolio / Portfolio">Portafolio / Portfolio</option>
+              <option value="Automatización Google Sheets">Automatización Google Sheets</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <span class="error-msg" id="err-servicio">Selecciona un tipo</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── SECCIÓN B: CARACTERÍSTICAS TÉCNICAS ─── -->
+    <div class="form-section">
+      <div class="section-label">B — Tipo de sistema</div>
+      <div class="radio-group" id="rg-plataforma">
+        <label class="radio-item" onclick="selectRadio('rg-plataforma',this)">
+          <input type="radio" name="plataforma" value="Web">
+          <span class="radio-dot"></span> 🌐 Sistema Web
+        </label>
+        <label class="radio-item" onclick="selectRadio('rg-plataforma',this)">
+          <input type="radio" name="plataforma" value="Local">
+          <span class="radio-dot"></span> 💻 Sistema Local (Desktop)
+        </label>
+        <label class="radio-item" onclick="selectRadio('rg-plataforma',this)">
+          <input type="radio" name="plataforma" value="Ambos">
+          <span class="radio-dot"></span> 🔀 Ambos
+        </label>
+      </div>
+    </div>
+
+    <!-- ─── SECCIÓN C: CARACTERÍSTICAS DEL DISEÑO ─── -->
+    <div class="form-section">
+      <div class="section-label">C — Diseño & Responsividad</div>
+      <div class="check-grid" id="cg-diseno">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Responsiva (móvil/tablet/PC)">
+          <div class="check-box">✓</div>
+          <span class="check-label">Responsiva</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Solo PC (no responsiva)">
+          <div class="check-box">✓</div>
+          <span class="check-label">Solo PC</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Modo oscuro">
+          <div class="check-box">✓</div>
+          <span class="check-label">Modo oscuro</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Modo claro">
+          <div class="check-box">✓</div>
+          <span class="check-label">Modo claro</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECCIÓN D: FUNCIONALIDADES ─── -->
+    <div class="form-section">
+      <div class="section-label">D — Funcionalidades deseadas</div>
+      <div class="check-grid" id="cg-func">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Login y registro de usuarios">
+          <div class="check-box">✓</div>
+          <span class="check-label">Login / Registro</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Base de datos">
+          <div class="check-box">✓</div>
+          <span class="check-label">Base de datos</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Generación de reportes PDF">
+          <div class="check-box">✓</div>
+          <span class="check-label">Reportes PDF</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" value="Panel de administración">
+          <div class="check-box">✓</div>
+          <span class="check-label">Panel Admin</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECCIÓN E: REQUERIMIENTOS ─── -->
+    <div class="form-section">
+      <div class="section-label">E — Requerimientos detallados <span style="color:var(--text-muted);font-size:9px;text-transform:none;letter-spacing:0;"></span></div>
+      <textarea class="f-textarea" id="f-requerimientos"></textarea>
+    </div>
+
+    <!-- ─── SECCIÓN F: ARCHIVOS ─── -->
+    <div class="form-section">
+      <div class="section-label">F — Archivos adjuntos <span style="color:var(--text-muted);font-size:9px;text-transform:none;letter-spacing:0;"></span></div>
+      <div class="file-drop" id="file-drop"
+           ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
+        <input type="file" id="f-archivos" multiple
+               accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
+               onchange="handleFiles(this.files)">
+        <div class="file-drop-icon">📎</div>
+        <p>
+          <strong>Arrastra archivos aquí</strong> o haz clic para seleccionar<br>
+          <span style="font-size:10px;">JPG, PNG, PDF, Word, Excel — máx. 10MB por archivo</span>
+        </p>
+      </div>
+      <div class="file-list" id="file-list"></div>
+    </div>
+
+    <!-- ─── BOTÓN ENVIAR ─── -->
+    <button class="btn-submit" id="btn-submit" onclick="enviarSolicitud()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+      Enviar Solicitud
+    </button>
+    <p class="form-note">
+      Al enviar, aceptas que nos contactemos contigo por Gmail y WhatsApp.<br>
+      Responderemos en menos de 48 horas hábiles.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PANTALLA DE ÉXITO
+══════════════════════════════════════════════════════ -->
+<div id="success-screen">
+  <div class="success-icon">✓</div>
+  <h2>¡Solicitud <em>enviada</em>!</h2>
+  <p>
+    Tus requerimientos fueron registrados correctamente.<br>
+    Espera un mensaje de confirmación en tu
+    <strong style="color:var(--text)">Gmail</strong> y
+    <strong style="color:var(--accent2)">WhatsApp</strong>.
+  </p>
+  <div class="success-detail">
+    <strong>¿Qué sigue?</strong><br>
+    Revisaremos tu solicitud y te enviaremos una cotización.<br>
+    Tiempo de respuesta: <strong>menos de 48 horas</strong>
+  </div>
+  <button class="btn-close-success" onclick="cerrarExito()">
+    Volver al inicio
+  </button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+// ─── CONFIGURACIÓN ────────────────────────────────────────
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuiWFYJNeAWHJwMNGdyOs2rb0c62vqvdNHPZZE8yqOzund1M2PVOUF2xUUGEeqEks7/exec';
+
+// ─── ESTADO ───────────────────────────────────────────────
+let archivosSeleccionados = [];
+
+// ─── ABRIR / CERRAR FORMULARIO ────────────────────────────
+function abrirFormulario() {
+  document.getElementById('form-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function cerrarFormulario() {
+  document.getElementById('form-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function cerrarExito() {
+  document.getElementById('success-screen').classList.remove('show');
+  cerrarFormulario();
+  document.body.style.overflow = '';
+}
+
+// ─── RADIO BUTTONS ────────────────────────────────────────
+function selectRadio(groupId, el) {
+  document.querySelectorAll('#' + groupId + ' .radio-item')
+    .forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ─── CHECKBOXES ───────────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('selected');
+  el.querySelector('input[type="checkbox"]').checked = el.classList.contains('selected');
+}
+
+// ─── OBTENER VALORES SELECCIONADOS ────────────────────────
+function getCheckValues(groupId) {
+  const items = document.querySelectorAll('#' + groupId + ' .check-item.selected input');
+  return Array.from(items).map(i => i.value);
+}
+function getRadioValue(name) {
+  const r = document.querySelector(`input[name="${name}"]:checked`);
+  return r ? r.value : '';
+}
+
+// ─── MANEJO DE ARCHIVOS ───────────────────────────────────
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    if (archivosSeleccionados.find(x => x.name === f.name)) return;
+    if (f.size > 10 * 1024 * 1024) { alert('El archivo "' + f.name + '" supera 10MB.'); return; }
+    archivosSeleccionados.push(f);
+  });
+  renderFileList();
+}
+function renderFileList() {
+  const list = document.getElementById('file-list');
+  list.innerHTML = '';
+  archivosSeleccionados.forEach((f, i) => {
+    const ext = f.name.split('.').pop().toUpperCase();
+    const tag = document.createElement('div');
+    tag.className = 'file-tag';
+    tag.innerHTML = `<span>${ext}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${f.name}</span><span style="color:var(--text-muted);font-size:10px;">${(f.size/1024).toFixed(0)}KB</span><span class="rm" onclick="removeFile(${i})">✕</span>`;
+    list.appendChild(tag);
+  });
+}
+function removeFile(i) {
+  archivosSeleccionados.splice(i, 1);
+  renderFileList();
+}
+function dragOver(e) {
+  e.preventDefault();
+  document.getElementById('file-drop').classList.add('drag-over');
+}
+function dragLeave() {
+  document.getElementById('file-drop').classList.remove('drag-over');
+}
+function dropFiles(e) {
+  e.preventDefault();
+  document.getElementById('file-drop').classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+}
+
+// ─── CONVERTIR ARCHIVO A BASE64 ───────────────────────────
+function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = () => rej(new Error('Error leyendo archivo'));
+    r.readAsDataURL(file);
+  });
+}
+
+// ─── VALIDACIÓN ───────────────────────────────────────────
+function validar() {
+  let ok = true;
+  const campos = [
+    { id:'f-nombre',   err:'err-nombre',   check: v => v.trim().length > 1 },
+    { id:'f-correo',   err:'err-correo',   check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id:'f-wsp',      err:'err-wsp',      check: v => v.trim().length > 4 },
+    { id:'f-proyecto', err:'err-proyecto', check: v => v.trim().length > 1 },
+    { id:'f-servicio', err:'err-servicio', check: v => v !== '' },
+  ];
+  campos.forEach(c => {
+    const el  = document.getElementById(c.id);
+    const err = document.getElementById(c.err);
+    if (!c.check(el.value)) {
+      el.classList.add('field-error');
+      err.style.display = 'block';
+      ok = false;
+    } else {
+      el.classList.remove('field-error');
+      err.style.display = 'none';
+    }
+  });
+  return ok;
+}
+
+// ─── ENVIAR SOLICITUD ─────────────────────────────────────
+async function enviarSolicitud() {
+  if (!validar()) {
+    // Scroll al primer error
+    document.querySelector('.field-error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  // Convertir archivos a base64
+  const archivosB64 = [];
+  for (const f of archivosSeleccionados) {
+    const b64 = await fileToBase64(f);
+    archivosB64.push({ nombre: f.name, tipo: f.type, datos: b64 });
+  }
+
+  const pais  = document.getElementById('f-pais').value;
+  const wsp   = document.getElementById('f-wsp').value.trim();
+
+  const payload = {
+    nombre:        document.getElementById('f-nombre').value.trim(),
+    correo:        document.getElementById('f-correo').value.trim(),
+    whatsapp:      pais + wsp,
+    proyecto:      document.getElementById('f-proyecto').value.trim(),
+    servicio:      document.getElementById('f-servicio').value,
+    plataforma:    getRadioValue('plataforma'),
+    diseno:        getCheckValues('cg-diseno').join(', '),
+    funciones:     getCheckValues('cg-func').join(', '),
+
+    requerimientos: document.getElementById('f-requerimientos').value.trim(),
+    archivos:      archivosB64
+  };
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body:    JSON.stringify(payload)
+    });
+    mostrarExito();
+  } catch(err) {
+    alert('Error de conexión. Verifica la URL del Apps Script.');
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg> Enviar Solicitud`;
+  }
+}
+
+function mostrarExito() {
+  document.getElementById('form-overlay').classList.remove('open');
+  document.getElementById('success-screen').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+</script>
+</body>
+</html>
